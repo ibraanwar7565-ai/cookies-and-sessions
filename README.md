@@ -94,6 +94,25 @@ For every request to `/articles/<int:id>`, increment the value of
 to http://localhost:5555/clear to reset attempts.
 - Run test suite with `pytest` to ensure all tests are passing.
   
+#### End-to-end tests (Playwright)
+
+The `e2e/` folder holds Playwright tests that drive the real app: the Flask
+API's paywall (3 views, then a 401, and `/clear` resetting it) and the React UI
+showing articles and then the "Maximum articles viewed" paywall.
+
+```bash
+npm install --prefix e2e
+npx --prefix e2e playwright install chromium   # first time only
+cd e2e && npm test
+```
+
+Playwright migrates and seeds the database, then starts Flask (port 5555) and
+the React dev server (port 4000) for you, or reuses them if they're already
+running. Run it from inside `pipenv shell` so `python` has the Flask deps, or
+point it at another interpreter with `PYTHON=/path/to/python npm test`. Use
+`npm run test:ui` for the interactive runner and `npm run report` to open the
+last HTML report.
+
 #### Step 5: Commit and Push Git History
 
 * Commit and push your code:
